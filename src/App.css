@@ -135,3 +135,67 @@ button:active {
   margin-bottom: 20px;
   color: #333;
 }
+
+/* General Styling (remains the same) */
+/* ... your existing CSS ... */
+
+/* Styled Checkbox Container */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-start;
+  margin: 10px 0;
+}
+
+.checkbox-label {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Custom Checkbox (toggle style) */
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox {
+  position: relative;
+  width: 50px;
+  height: 25px;
+  background-color: #ccc;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.checkbox::before {
+  content: "";
+  position: absolute;
+  width: 21px;
+  height: 21px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+
+/* Checkbox checked state */
+.checkbox-input:checked + .checkbox {
+  background-color: #28a745;
+}
+
+.checkbox-input:checked + .checkbox::before {
+  transform: translateX(25px);
+}
+
+/* Hover and Active effects */
+.checkbox:hover {
+  background-color: #999;
+}
+
+.checkbox-input:checked + .checkbox:hover {
+  background-color: #218838;
+}
