@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import './App.css';
 
 function App() {
@@ -28,6 +28,28 @@ function App() {
     if (shuttleService) savings += 35;
 
     setTotalSavings(savings);
+  };
+
+  // Inside your component:
+  const messageRef = useRef(null);
+
+  const generateMessage = () => {
+    const bbText = bedAndBreakfast ? "Yes" : "No";
+    const shuttleText = shuttleService ? "Yes" : "No";
+
+    return (
+      `Start Date: ${startDate || "N/A"}\n` +
+      `End Date: ${endDate || "N/A"}\n` +
+      `Total Savings: $${totalSavings !== null ? totalSavings : "0"}\n` +
+      `Bed and Breakfast: ${bbText}\n` +
+      `Shuttle Service: ${shuttleText}`
+    );
+  };
+
+  const handleFormSubmit = () => {
+    if (messageRef.current) {
+      messageRef.current.value = generateMessage();
+    }
   };
 
   return (
@@ -93,8 +115,13 @@ function App() {
         </div>
       )}
 
-<h2>Sign Up</h2>
-      <form action="https://formspree.io/f/xwpezznw" method="POST" className="contact-form">
+      <h2>Sign Up</h2>
+      <form
+        action="https://formspree.io/f/xwpezznw"
+        method="POST"
+        className="contact-form"
+        onSubmit={handleFormSubmit}
+      >
         <div>
           <label>Your Name:</label>
           <input type="text" name="name" required />
@@ -105,7 +132,12 @@ function App() {
         </div>
         <div>
           <label>Enter start/end dates, make and model.</label>
-          <textarea name="message" rows="4" required></textarea>
+          <textarea
+            name="message"
+            rows="4"
+            ref={messageRef}
+            required
+          ></textarea>
         </div>
         <button type="submit">Send Message</button>
       </form>
